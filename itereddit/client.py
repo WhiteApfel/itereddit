@@ -20,7 +20,13 @@ class Itereddit:
     :type over18: bool
     """
 
-    def __init__(self, subreddit: str = "rate_my_dick", last_post_id: str = None, sort: Literal['new', 'hot'] = 'new', over18: bool = True):
+    def __init__(
+        self,
+        subreddit: str = "rate_my_dick",
+        last_post_id: str = None,
+        sort: Literal["new", "hot"] = "new",
+        over18: bool = True,
+    ):
         self.subreddit = subreddit
         self._client = None
         self.__last_post = last_post_id
@@ -54,9 +60,7 @@ class Itereddit:
 
     async def __anext__(self) -> SubredditPost:
         if not self.__posts_queue.qsize():
-            response = await self.client.get(
-                self.url, params=self.params
-            )
+            response = await self.client.get(self.url, params=self.params)
             if response.status_code == 200:
                 piece = SubredditPiece(**response.json())
                 for post_id in piece.posts:

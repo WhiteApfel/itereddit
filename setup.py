@@ -5,31 +5,31 @@ from setuptools import setup
 
 
 def read(filename):
-    with open(filename, encoding='utf-8') as file:
+    with open(filename, encoding="utf-8") as file:
         return file.read()
 
 
 def requirements():
-    with open('requirements.txt', 'r') as req:
+    with open("requirements.txt", "r") as req:
         return [r for r in req.read().split("\n") if r]
 
 
 setup(
-    name='itereddit',
-    version=environ.get('TAG_VERSION').replace('v', ''),
-    packages=['itereddit'],
-    url='https://github.com/WhiteApfel/itereddit',
-    license='Mozilla Public License 2.0',
-    author='WhiteApfel',
-    author_email='white@pfel.ru',
-    description='Iterate posts from subreddit asynchronously',
+    name="itereddit",
+    version=environ.get("TAG_VERSION").replace("v", ""),
+    packages=["itereddit"],
+    url="https://github.com/WhiteApfel/itereddit",
+    license="Mozilla Public License 2.0",
+    author="WhiteApfel",
+    author_email="white@pfel.ru",
+    description="Iterate posts from subreddit asynchronously",
     install_requires=requirements(),
     project_urls={
         "Donate": "https://pfel.cc/donate",
         "Source": "https://github.com/WhiteApfel/itereddit",
-        "Telegram": "https://t.me/apfel"
+        "Telegram": "https://t.me/apfel",
     },
-    long_description=read('README.md'),
+    long_description=read("README.md"),
     long_description_content_type="text/markdown",
-    keywords='reddit wrapper'
+    keywords="reddit wrapper",
 )
