@@ -1,5 +1,5 @@
 from asyncio import Queue
-from typing import AsyncIterator
+from typing import AsyncIterator, Literal
 
 from httpx import AsyncClient
 
@@ -14,12 +14,15 @@ class Itereddit:
     :type subreddit: str
     :param last_post_id: id of last post, so as not to iterate already processed posts
     :type last_post_id: str
+    :param sort: type of sorting by reddit
+    :type sort: str: `name` or `hot`
     """
 
-    def __init__(self, subreddit: str = "rate_my_dick", last_post_id: str = None):
+    def __init__(self, subreddit: str = "rate_my_dick", last_post_id: str = None, sort: Literal['new', 'hot'] = 'new'):
         self.subreddit = subreddit
         self._client = None
         self.__last_post = last_post_id
+        self.__sort = sort
         self.__posts_queue = Queue()
 
     @property
@@ -39,7 +42,7 @@ class Itereddit:
             "include": "prefsSubreddit",
             "after": after,
             "forceGeopopular": False,
-            "sort": "new",
+            "sort": self.__sort,
         }
 
     def __aiter__(self) -> AsyncIterator[SubredditPost]:
