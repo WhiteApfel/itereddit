@@ -1,4 +1,8 @@
+from asyncio import Queue
+
 from httpx import AsyncClient
+
+from itereddit.models.subreddit_posts import SubredditPiece, SubredditPost
 
 
 class Itereddit:
@@ -11,6 +15,8 @@ class Itereddit:
     def __init__(self, subreddit: str):
         self.subreddit = subreddit
         self._client = None
+        self.__last_post = None
+        self.__posts_queue = Queue()
 
     @property
     def client(self):
@@ -31,3 +37,16 @@ class Itereddit:
             "forceGeopopular": False,
             "sort": 'new'
         }
+
+    def __aiter__(self):
+        return self
+
+    async def __anext__(self) -> SubredditPost:
+        if not self.__posts_queue.qsize():
+            response = await self.client.get(self.url, params=self.params(self.__last_post))
+            if response.status_code == 200:
+                piece = SubredditPiece(**response.json())
+                for post_id in piece.posts:
+                    await self.__posts_queue.put(piece.posts[post_id])
+                self.__last_post = piece.post_ids[-1]
+        return await self.__posts_queue.get()
