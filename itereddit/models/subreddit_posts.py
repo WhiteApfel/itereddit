@@ -37,6 +37,12 @@ class SubredditPostMediaMetadata(BaseModel):
 class SubredditPostMediaMetadatas(BaseModel):
     __root__: Dict[str, SubredditPostMediaMetadata]
 
+    def __iter__(self):
+        return iter(self.__root__)
+
+    def __getitem__(self, item):
+        return self.__root__[item]
+
 
 class SubredditPostMedia(BaseModel):
     obfuscated: Optional[str]
@@ -66,6 +72,12 @@ class SubredditPost(BaseModel):
 
 class SubredditPosts(BaseModel):
     __root__: Dict[str, SubredditPost]
+
+    def __iter__(self):
+        return iter(self.__root__)
+
+    def __getitem__(self, item):
+        return self.__root__[item]
 
 
 class SubredditPiece(BaseModel):
