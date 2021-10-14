@@ -17,3 +17,17 @@ class Itereddit:
         if not self._client:
             self._client = AsyncClient()
         return self._client
+
+    @property
+    def url(self):
+        return f"https://gateway.reddit.com/desktopapi/v1/subreddits/{self.subreddit}"
+
+    def params(self, after: str = None):
+        return {
+            "rtj": "only",
+            "allow_over18": 1,
+            "include": "prefsSubreddit",
+            "after": after,
+            "forceGeopopular": False,
+            "sort": 'new'
+        }
