@@ -16,13 +16,16 @@ class Itereddit:
     :type last_post_id: str
     :param sort: type of sorting by reddit
     :type sort: str: `name` or `hot`
+    :param over18: allow 18+ (adult, for example) content
+    :type over18: bool
     """
 
-    def __init__(self, subreddit: str = "rate_my_dick", last_post_id: str = None, sort: Literal['new', 'hot'] = 'new'):
+    def __init__(self, subreddit: str = "rate_my_dick", last_post_id: str = None, sort: Literal['new', 'hot'] = 'new', over18: bool = True):
         self.subreddit = subreddit
         self._client = None
         self.__last_post = last_post_id
         self.__sort = sort
+        self.over18 = over18
         self.__posts_queue = Queue()
 
     @property
@@ -39,7 +42,7 @@ class Itereddit:
     def params(self):
         return {
             "rtj": "only",
-            "allow_over18": 1,
+            "allow_over18": int(self.over18),
             "include": "prefsSubreddit",
             "after": self.__last_post,
             "forceGeopopular": False,
