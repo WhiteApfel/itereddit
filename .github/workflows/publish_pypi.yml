@@ -20,12 +20,12 @@ jobs:
           python3 -m pip install --user --upgrade setuptools wheel
 
       - name: Build a binary wheel and a source tarball
+        env:
+          TAG_VERSION: ${{ github.event.release.tag_name }}
         run: >-
           python3 setup.py sdist bdist_wheel
 
       - name: Publish package to PyPI
         uses: pypa/gh-action-pypi-publish@master
-        env:
-          TAG_VERSION: ${{ github.event.release.tag_name }}
         with:
           password: ${{ secrets.PYPI_API_TOKEN }}
