@@ -13,6 +13,7 @@ class Itereddit:
     :param subreddit: name of subreddit
     :type subreddit: str
     """
+
     def __init__(self, subreddit: str = "rate_my_dick"):
         self.subreddit = subreddit
         self._client = None
@@ -36,7 +37,7 @@ class Itereddit:
             "include": "prefsSubreddit",
             "after": after,
             "forceGeopopular": False,
-            "sort": 'new'
+            "sort": "new",
         }
 
     def __aiter__(self) -> AsyncIterator[SubredditPost]:
@@ -44,7 +45,9 @@ class Itereddit:
 
     async def __anext__(self) -> SubredditPost:
         if not self.__posts_queue.qsize():
-            response = await self.client.get(self.url, params=self.params(self.__last_post))
+            response = await self.client.get(
+                self.url, params=self.params(self.__last_post)
+            )
             if response.status_code == 200:
                 piece = SubredditPiece(**response.json())
                 for post_id in piece.posts:

@@ -15,11 +15,7 @@ class SubredditMediaResolution(BaseModel):
 
     @root_validator(pre=True)
     def compatibility(cls, values):
-        comp = {
-            "u": "url",
-            "x": "width",
-            "y": "height"
-        }
+        comp = {"u": "url", "x": "width", "y": "height"}
         for k in comp:
             if k in values:
                 values[comp[k]] = values.get(k)
@@ -30,8 +26,8 @@ class SubredditPostMediaMetadata(BaseModel):
     status: str
     e: str
     mime_type: str = Field(..., alias="m")
-    original: SubredditMediaResolution = Field(..., alias='s')
-    preview: List[SubredditMediaResolution] = Field(..., alias='p')
+    original: SubredditMediaResolution = Field(..., alias="s")
+    preview: List[SubredditMediaResolution] = Field(..., alias="p")
 
 
 class SubredditPostMediaMetadatas(BaseModel):
@@ -48,7 +44,9 @@ class SubredditPostMedia(BaseModel):
     obfuscated: Optional[str]
     content: Optional[str]
     type: str
-    media_metadata: Optional[SubredditPostMediaMetadatas] = Field(None, alias="mediaMetadata")
+    media_metadata: Optional[SubredditPostMediaMetadatas] = Field(
+        None, alias="mediaMetadata"
+    )
     resolutions: Optional[List[SubredditMediaResolution]]
     gallery: Optional[dict]
     source: Optional[dict]
