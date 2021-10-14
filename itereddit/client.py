@@ -35,12 +35,13 @@ class Itereddit:
     def url(self):
         return f"https://gateway.reddit.com/desktopapi/v1/subreddits/{self.subreddit}"
 
-    def params(self, after: str = None):
+    @property
+    def params(self):
         return {
             "rtj": "only",
             "allow_over18": 1,
             "include": "prefsSubreddit",
-            "after": after,
+            "after": self.__last_post,
             "forceGeopopular": False,
             "sort": self.__sort,
         }
@@ -51,7 +52,7 @@ class Itereddit:
     async def __anext__(self) -> SubredditPost:
         if not self.__posts_queue.qsize():
             response = await self.client.get(
-                self.url, params=self.params(self.__last_post)
+                self.url, params=self.params
             )
             if response.status_code == 200:
                 piece = SubredditPiece(**response.json())
