@@ -12,12 +12,14 @@ class Itereddit:
 
     :param subreddit: name of subreddit
     :type subreddit: str
+    :param last_post_id: id of last post, so as not to iterate already processed posts
+    :type last_post_id: str
     """
 
-    def __init__(self, subreddit: str = "rate_my_dick"):
+    def __init__(self, subreddit: str = "rate_my_dick", last_post_id: str = None):
         self.subreddit = subreddit
         self._client = None
-        self.__last_post = None
+        self.__last_post = last_post_id
         self.__posts_queue = Queue()
 
     @property
