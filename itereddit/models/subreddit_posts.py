@@ -32,7 +32,7 @@ class SubredditPostMediaMetadatas(BaseModel):
 class SubredditPostMedia(BaseModel):
     obfuscated: Any
     type: str
-    media_metadata: ... = Field(..., alias="mediaMetadata")
+    media_metadata: SubredditPostMediaMetadatas = Field(..., alias="mediaMetadata")
 
 
 class SubredditPost(BaseModel):
