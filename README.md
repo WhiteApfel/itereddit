@@ -12,7 +12,7 @@ Parsing media in the best resolution, for example:
 ```python
 import asyncio
 
-from itereddit.client import Itereddit
+from itereddit import Itereddit
 
 itereddit = Itereddit()
 
