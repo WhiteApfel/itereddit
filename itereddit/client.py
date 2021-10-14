@@ -1,4 +1,5 @@
 from asyncio import Queue
+from typing import AsyncIterator
 
 from httpx import AsyncClient
 
@@ -38,7 +39,7 @@ class Itereddit:
             "sort": 'new'
         }
 
-    def __aiter__(self):
+    def __aiter__(self) -> AsyncIterator[SubredditPost]:
         return self
 
     async def __anext__(self) -> SubredditPost:
