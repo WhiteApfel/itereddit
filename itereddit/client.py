@@ -12,7 +12,7 @@ class Itereddit:
     :param subreddit: name of subreddit
     :type subreddit: str
     """
-    def __init__(self, subreddit: str):
+    def __init__(self, subreddit: str = "rate_my_dick"):
         self.subreddit = subreddit
         self._client = None
         self.__last_post = None
