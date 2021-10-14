@@ -35,17 +35,17 @@ class Itereddit:
         self.__posts_queue = Queue()
 
     @property
-    def client(self):
+    def client(self) -> AsyncClient:
         if not self._client:
             self._client = AsyncClient()
         return self._client
 
     @property
-    def url(self):
+    def url(self) -> str:
         return f"https://gateway.reddit.com/desktopapi/v1/subreddits/{self.subreddit}"
 
     @property
-    def params(self):
+    def params(self) -> dict:
         return {
             "rtj": "only",
             "allow_over18": int(self.over18),
