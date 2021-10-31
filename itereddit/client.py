@@ -66,4 +66,6 @@ class Itereddit:
                 for post_id in piece.posts:
                     await self.__posts_queue.put(piece.posts[post_id])
                 self.__last_post = piece.post_ids[-1]
+            if response.status_code != 200:
+                raise ValueError(response.json())
         return await self.__posts_queue.get()
