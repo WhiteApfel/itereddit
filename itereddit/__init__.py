@@ -1,1 +1,1 @@
-from client import Itereddit
+from .client import Itereddit
